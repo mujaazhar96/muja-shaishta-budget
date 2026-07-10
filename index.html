@@ -571,6 +571,265 @@
       }
     }
 
+  
+    /* Gemini receipt scanner v2.6 */
+    .modal.wide {
+      width: min(1120px, 100%);
+    }
+
+    .receipt-upload-zone {
+      min-height: 300px;
+      cursor: pointer;
+      transition: border-color .2s ease, background .2s ease;
+    }
+
+    .receipt-upload-zone:hover {
+      border-color: var(--green);
+      background: #f1f7f4;
+    }
+
+    .receipt-camera {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--soft);
+      color: var(--green);
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    .receipt-privacy {
+      margin-top: 12px;
+      padding: 11px 12px;
+      border-radius: 11px;
+      background: #f5f7f6;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .receipt-preview-layout {
+      display: grid;
+      grid-template-columns: minmax(180px, 300px) 1fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .receipt-preview-image {
+      width: 100%;
+      max-height: 430px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f6f7f6;
+    }
+
+    .receipt-preview-copy {
+      display: grid;
+      gap: 8px;
+    }
+
+    .receipt-preview-copy span,
+    .receipt-preview-copy p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    .receipt-processing {
+      min-height: 310px;
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .receipt-processing span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .receipt-spinner {
+      width: 46px;
+      height: 46px;
+      border: 4px solid #dce8e2;
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: receipt-spin .85s linear infinite;
+    }
+
+    @keyframes receipt-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .receipt-review-header {
+      display: grid;
+      grid-template-columns: 1.3fr .85fr .85fr .85fr;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .receipt-summary-card {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 12px;
+      display: grid;
+      gap: 5px;
+      background: #fafbfa;
+    }
+
+    .receipt-summary-card span {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .receipt-summary-card strong {
+      font-size: 16px;
+      overflow-wrap: anywhere;
+    }
+
+    .receipt-bulk-tools {
+      display: flex;
+      align-items: end;
+      gap: 9px;
+      flex-wrap: wrap;
+      padding: 13px;
+      border-radius: 13px;
+      background: var(--soft);
+      margin-bottom: 13px;
+    }
+
+    .receipt-bulk-tools label {
+      display: grid;
+      gap: 5px;
+      min-width: 150px;
+    }
+
+    .receipt-bulk-tools label span {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    .receipt-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+    }
+
+    .receipt-table {
+      min-width: 900px;
+      margin: 0;
+    }
+
+    .receipt-table input,
+    .receipt-table select {
+      padding: 8px 9px;
+      min-width: 0;
+    }
+
+    .receipt-table .receipt-name {
+      min-width: 190px;
+    }
+
+    .receipt-table .receipt-qty {
+      width: 70px;
+    }
+
+    .receipt-table .receipt-price {
+      width: 105px;
+    }
+
+    .receipt-item-remove {
+      width: 32px;
+      height: 32px;
+    }
+
+    .receipt-review-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-top: 13px;
+    }
+
+    .receipt-calculated {
+      display: grid;
+      gap: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .receipt-calculated strong {
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .receipt-warning {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 11px;
+      background: #fff8df;
+      border: 1px solid #edd38f;
+      color: #76550e;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .receipt-error-actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 17px;
+    }
+
+    @media (max-width: 900px) {
+      .receipt-preview-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .receipt-preview-image {
+        max-height: 300px;
+      }
+
+      .receipt-review-header {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .receipt-review-footer {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .receipt-review-footer .modal-actions {
+        margin-top: 0;
+      }
+
+      .receipt-bulk-tools {
+        align-items: stretch;
+      }
+
+      .receipt-bulk-tools label {
+        min-width: calc(50% - 5px);
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .receipt-review-header {
+        grid-template-columns: 1fr;
+      }
+
+      .receipt-bulk-tools label {
+        min-width: 100%;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -665,6 +924,12 @@
       getFirestore,collection,doc,addDoc,setDoc,deleteDoc,onSnapshot,
       serverTimestamp,writeBatch,getDocs
     } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+    import {
+      initializeAppCheck,ReCaptchaV3Provider
+    } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app-check.js";
+    import {
+      getAI,getGenerativeModel,GoogleAIBackend,Schema
+    } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-ai.js";
 
     const firebaseConfig={
       apiKey:"AIzaSyCvadQAexwgbuEHvmm4DjyUCnP8nFnO-0I",
@@ -683,8 +948,17 @@
     const DEFAULT_CATEGORIES=["Groceries","Dining Out","Housing","Utilities","Transportation","Car","Shopping","Health","Entertainment","Personal Care","Gifts","Other"];
 
     const app=initializeApp(firebaseConfig);
+
+    // Public reCAPTCHA v3 site key. The matching secret remains in Firebase.
+    initializeAppCheck(app,{
+      provider:new ReCaptchaV3Provider("6LfoBE0tAAAAAEdw8PFD42jMcgmV88YHgFkaEEc2"),
+      isTokenAutoRefreshEnabled:true
+    });
+
     const auth=getAuth(app);
     const db=getFirestore(app);
+    const ai=getAI(app,{backend:new GoogleAIBackend()});
+
     setPersistence(auth,browserLocalPersistence).catch(console.error);
 
     const state={
@@ -890,11 +1164,11 @@
     }
 
     function renderSettings(){
-      $("settingsView").innerHTML=`<div class="grid-3"><article class="card">${title("Firebase","Live shared database")}<p><strong>Project:</strong> muja-shaishta-budget</p><p><strong>Household:</strong> ${HOUSEHOLD}</p><p><strong>Signed in:</strong> ${esc(state.user.email)}</p></article><article class="card">${title("Transaction deletion","Available in the Transactions page")}<p>Every transaction has a red delete button. The app asks for confirmation before permanently deleting it from Firestore.</p></article><article class="card">${title("Security","Two approved accounts only")}<p>Authentication and Firestore rules should both be restricted to the two approved Firebase UIDs.</p></article></div>`;
+      $("settingsView").innerHTML=`<div class="grid-3"><article class="card">${title("Firebase","Live shared database")}<p><strong>Project:</strong> muja-shaishta-budget</p><p><strong>Household:</strong> ${HOUSEHOLD}</p><p><strong>Signed in:</strong> ${esc(state.user.email)}</p></article><article class="card">${title("Transaction deletion","Available in the Transactions page")}<p>Every transaction has a red delete button. The app asks for confirmation before permanently deleting it from Firestore.</p></article><article class="card">${title("Security & AI","App Check and Gemini enabled")}<p>Authentication and Firestore remain restricted to the two approved Firebase UIDs. App Check protects Firebase requests, and Gemini 3.5 Flash powers receipt extraction.</p></article></div>`;
     }
 
-    function modal(titleText,body,onReady){
-      $("modalRoot").innerHTML=`<div class="modal-backdrop"><section class="modal"><div class="modal-head"><div><p class="eyebrow">MUJA & SHAISHTA</p><h2>${esc(titleText)}</h2></div><button id="closeModal" class="icon-button">×</button></div>${body}</section></div>`;
+    function modal(titleText,body,onReady,wide=false){
+      $("modalRoot").innerHTML=`<div class="modal-backdrop"><section class="modal ${wide?"wide":""}"><div class="modal-head"><div><p class="eyebrow">MUJA & SHAISHTA</p><h2>${esc(titleText)}</h2></div><button id="closeModal" class="icon-button">×</button></div>${body}</section></div>`;
       $("closeModal").onclick=closeModal;document.querySelector(".modal-backdrop").onmousedown=e=>{if(e.target===e.currentTarget)closeModal()};onReady?.();
     }
     function closeModal(){$("modalRoot").innerHTML=""}
@@ -976,8 +1250,547 @@
       await addDoc(col("transactions"),{type:"expense",description:r.name,amount:Number(r.amount),date:today(),categoryId:r.categoryId,forWhom:r.forWhom,notes:"Recurring expense",createdBy:state.user.uid,createdAt:serverTimestamp()});toast("Recurring expense recorded.");
     }
 
+    function findCategoryId(suggestedName){
+      const value=String(suggestedName||"").trim().toLowerCase();
+      const exact=state.categories.find(c=>c.name.toLowerCase()===value);
+      if(exact)return exact.id;
+      const partial=state.categories.find(c=>
+        value.includes(c.name.toLowerCase())||
+        c.name.toLowerCase().includes(value)
+      );
+      if(partial)return partial.id;
+      return state.categories.find(c=>c.name.toLowerCase()==="other")?.id||
+        state.categories[0]?.id||"";
+    }
+
+    async function receiptFilePart(file){
+      const data=await new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onloadend=()=>resolve(String(reader.result).split(",")[1]);
+        reader.onerror=()=>reject(reader.error||new Error("Unable to read the receipt image."));
+        reader.readAsDataURL(file);
+      });
+      return {inlineData:{data,mimeType:file.type}};
+    }
+
+    function receiptFailureMessage(error){
+      console.error(error);
+      const message=`${error?.code||""} ${error?.message||""}`.toLowerCase();
+      if(message.includes("app-check")||message.includes("appcheck")||message.includes("403")){
+        return "App Check rejected the request. Confirm that this latest index.html is deployed on mujaazhar96.github.io.";
+      }
+      if(message.includes("quota")||message.includes("429")){
+        return "The Gemini free-tier quota is temporarily unavailable or has been reached. Try again later.";
+      }
+      if(message.includes("too large")||message.includes("413")){
+        return "The receipt image is too large. Crop it or take a lower-resolution photo.";
+      }
+      if(message.includes("mime")||message.includes("unsupported")){
+        return "This image format is not supported. Use a JPG, PNG, or WebP receipt image.";
+      }
+      return "Gemini could not read the receipt. Try a clearer, well-lit photo showing the entire receipt.";
+    }
+
     function openReceiptModal(){
-      modal("Upload receipt",`<div class="receipt-zone"><strong>Receipt extraction will be connected to Gemini next</strong><span>The Firebase login and Firestore application are active. For now, add the receipt items through Add Transaction.</span></div><div class="modal-actions"><button id="cancelModal" class="ghost">Close</button></div>`,()=>{$("cancelModal").onclick=closeModal});
+      if(!state.categories.length){
+        toast("Categories are still loading.");
+        return;
+      }
+
+      let selectedFile=null;
+      let previewUrl="";
+      let receipt=null;
+
+      modal("Scan receipt",`<div id="receiptWorkflow"></div>`,()=>{
+        showUpload();
+      },true);
+
+      function cleanupPreview(){
+        if(previewUrl){
+          URL.revokeObjectURL(previewUrl);
+          previewUrl="";
+        }
+      }
+
+      function closeReceipt(){
+        cleanupPreview();
+        closeModal();
+      }
+
+      function showUpload(){
+        $("receiptWorkflow").innerHTML=`
+          <label class="receipt-zone receipt-upload-zone">
+            <div class="receipt-camera">▣</div>
+            <strong>Take a photo or choose a receipt</strong>
+            <span>Use a clear, straight photo that shows the complete receipt.</span>
+            <span>JPG, PNG or WebP · maximum 14 MB</span>
+            <input id="receiptFile" type="file" accept="image/jpeg,image/png,image/webp" capture="environment">
+          </label>
+          <div class="receipt-privacy">
+            The image is sent to Gemini only for extraction. This version does not permanently store the receipt image.
+          </div>
+          <div class="modal-actions">
+            <button id="cancelReceipt" class="ghost" type="button">Cancel</button>
+          </div>`;
+
+        $("cancelReceipt").onclick=closeReceipt;
+        $("receiptFile").onchange=event=>{
+          const file=event.target.files?.[0];
+          if(!file)return;
+          if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
+            toast("Use a JPG, PNG, or WebP image.");
+            return;
+          }
+          if(file.size>14*1024*1024){
+            toast("Choose an image smaller than 14 MB.");
+            return;
+          }
+          selectedFile=file;
+          cleanupPreview();
+          previewUrl=URL.createObjectURL(file);
+          showPreview();
+        };
+      }
+
+      function showPreview(){
+        $("receiptWorkflow").innerHTML=`
+          <div class="receipt-preview-layout">
+            <img class="receipt-preview-image" src="${previewUrl}" alt="Selected receipt">
+            <div class="receipt-preview-copy">
+              <strong>${esc(selectedFile.name||"Receipt image")}</strong>
+              <span>${(selectedFile.size/1024/1024).toFixed(1)} MB</span>
+              <p>Gemini will extract the merchant, date, individual items, totals, and category suggestions.</p>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button id="chooseAnotherReceipt" class="ghost" type="button">Choose another</button>
+            <button id="analyzeReceipt" class="primary" type="button">Analyze receipt</button>
+          </div>`;
+
+        $("chooseAnotherReceipt").onclick=showUpload;
+        $("analyzeReceipt").onclick=analyzeReceipt;
+      }
+
+      async function analyzeReceipt(){
+        $("receiptWorkflow").innerHTML=`
+          <div class="receipt-processing">
+            <div class="receipt-spinner"></div>
+            <strong>Gemini is reading the receipt…</strong>
+            <span>This can take several seconds.</span>
+          </div>`;
+
+        try{
+          const categoryNames=state.categories.map(c=>c.name);
+          const categorySchema=Schema.enumString({enum:categoryNames});
+          const receiptSchema=Schema.object({
+            properties:{
+              merchant:Schema.string(),
+              date:Schema.string(),
+              subtotal:Schema.number(),
+              tax:Schema.number(),
+              total:Schema.number(),
+              items:Schema.array({
+                items:Schema.object({
+                  properties:{
+                    name:Schema.string(),
+                    quantity:Schema.number(),
+                    unitPrice:Schema.number(),
+                    lineTotal:Schema.number(),
+                    suggestedCategory:categorySchema
+                  }
+                })
+              })
+            },
+            optionalProperties:["date","subtotal","tax","total"]
+          });
+
+          const model=getGenerativeModel(ai,{
+            model:"gemini-3.5-flash",
+            generationConfig:{
+              responseMimeType:"application/json",
+              responseSchema:receiptSchema,
+              temperature:0.1
+            }
+          });
+
+          const imagePart=await receiptFilePart(selectedFile);
+          const prompt=`Read this household purchase receipt and return structured data.
+
+Rules:
+- Extract only actual purchasable line items.
+- Do not include subtotal, tax, total, payment method, card number, tender, change, loyalty points, or store messages as items.
+- Use a concise, readable item name.
+- quantity must be numeric and should default to 1 when not clearly shown.
+- unitPrice is the price for one item when visible.
+- lineTotal is the amount charged for that line after item-level discounts and before receipt-level tax.
+- date must use YYYY-MM-DD. Return an empty string if the date cannot be read.
+- Return 0 for subtotal, tax, or total when the value cannot be read.
+- suggestedCategory must be the closest category from the provided schema.
+- Never invent an item that is not visible.`;
+
+          const result=await model.generateContent([prompt,imagePart]);
+          const parsed=JSON.parse(result.response.text());
+          const rawItems=Array.isArray(parsed.items)?parsed.items:[];
+
+          if(!rawItems.length){
+            throw new Error("No receipt items were detected.");
+          }
+
+          receipt={
+            merchant:String(parsed.merchant||"Receipt").trim()||"Receipt",
+            date:/^\d{4}-\d{2}-\d{2}$/.test(String(parsed.date||""))?parsed.date:today(),
+            subtotal:Number(parsed.subtotal||0),
+            tax:Number(parsed.tax||0),
+            total:Number(parsed.total||0),
+            items:rawItems.map(item=>{
+              const quantity=Math.max(1,Number(item.quantity||1));
+              const unitPrice=Math.max(0,Number(item.unitPrice||0));
+              const calculated=unitPrice*quantity;
+              const lineTotal=Math.max(0,Number(item.lineTotal||calculated||0));
+              return {
+                id:crypto.randomUUID(),
+                included:true,
+                name:String(item.name||"Item").trim()||"Item",
+                quantity,
+                lineTotal:Number(lineTotal.toFixed(2)),
+                categoryId:findCategoryId(item.suggestedCategory),
+                forWhom:"Household",
+                kind:"item"
+              };
+            }).filter(item=>item.lineTotal>0)
+          };
+
+          if(!receipt.items.length){
+            throw new Error("No priced items were detected.");
+          }
+
+          // Add the tax as a reviewable row so imported transactions match
+          // the amount that actually left the household.
+          if(receipt.tax>0){
+            receipt.items.push({
+              id:crypto.randomUUID(),
+              included:true,
+              name:"Sales tax",
+              quantity:1,
+              lineTotal:Number(receipt.tax.toFixed(2)),
+              categoryId:findCategoryId("Other"),
+              forWhom:"Household",
+              kind:"tax"
+            });
+          }
+
+          showReview();
+        }catch(error){
+          showReceiptError(receiptFailureMessage(error));
+        }
+      }
+
+      function selectedTotal(){
+        return receipt.items
+          .filter(item=>item.included)
+          .reduce((total,item)=>total+Number(item.lineTotal||0),0);
+      }
+
+      function receiptDifference(){
+        if(!receipt.total)return 0;
+        return Number((receipt.total-selectedTotal()).toFixed(2));
+      }
+
+      function showReview(){
+        const difference=receiptDifference();
+        $("receiptWorkflow").innerHTML=`
+          <div class="receipt-review-header">
+            <label class="receipt-summary-card">
+              <span>Merchant</span>
+              <input id="receiptMerchant" value="${esc(receipt.merchant)}">
+            </label>
+            <label class="receipt-summary-card">
+              <span>Date</span>
+              <input id="receiptDate" type="date" value="${esc(receipt.date)}">
+            </label>
+            <div class="receipt-summary-card">
+              <span>Receipt total</span>
+              <strong>${money(receipt.total)}</strong>
+            </div>
+            <div class="receipt-summary-card">
+              <span>Selected total</span>
+              <strong id="receiptSelectedTotal">${money(selectedTotal())}</strong>
+            </div>
+          </div>
+
+          <div class="receipt-bulk-tools">
+            <label>
+              <span>Set “For” on every item</span>
+              <select id="receiptApplyFor">
+                ${FOR_OPTIONS.map(option=>`<option>${option}</option>`).join("")}
+              </select>
+            </label>
+            <button id="applyForAll" class="secondary" type="button">Apply to all</button>
+            <label>
+              <span>Set one category on every item</span>
+              <select id="receiptApplyCategory">${categoryOptions()}</select>
+            </label>
+            <button id="applyCategoryAll" class="secondary" type="button">Apply category</button>
+            <button id="addReceiptRow" class="ghost" type="button">＋ Add item</button>
+          </div>
+
+          <div class="receipt-table-wrap">
+            <table class="receipt-table">
+              <thead>
+                <tr>
+                  <th>Use</th>
+                  <th>Item</th>
+                  <th>Qty</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                  <th>For</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="receiptRows"></tbody>
+            </table>
+          </div>
+
+          <div id="receiptDifferenceMessage">
+            ${Math.abs(difference)>0.01?`
+              <div class="receipt-warning">
+                The selected item total differs from the printed receipt total by ${money(Math.abs(difference))}.
+                Review discounts, deposits, fees, or unreadable lines before importing.
+              </div>`:""}
+          </div>
+
+          <div class="receipt-review-footer">
+            <div class="receipt-calculated">
+              <span>${receipt.items.length} extracted rows</span>
+              <strong id="receiptFooterTotal">${money(selectedTotal())} selected</strong>
+            </div>
+            <div class="modal-actions">
+              <button id="rescanReceipt" class="ghost" type="button">Choose another</button>
+              <button id="importReceipt" class="primary" type="button">Import selected items</button>
+            </div>
+          </div>`;
+
+        $("receiptMerchant").oninput=event=>receipt.merchant=event.target.value;
+        $("receiptDate").oninput=event=>receipt.date=event.target.value;
+        $("rescanReceipt").onclick=showUpload;
+
+        $("applyForAll").onclick=()=>{
+          const value=$("receiptApplyFor").value;
+          receipt.items.forEach(item=>item.forWhom=value);
+          renderRows();
+        };
+
+        $("applyCategoryAll").onclick=()=>{
+          const value=$("receiptApplyCategory").value;
+          receipt.items.forEach(item=>item.categoryId=value);
+          renderRows();
+        };
+
+        $("addReceiptRow").onclick=()=>{
+          receipt.items.push({
+            id:crypto.randomUUID(),
+            included:true,
+            name:"",
+            quantity:1,
+            lineTotal:0,
+            categoryId:state.categories[0]?.id||"",
+            forWhom:"Household",
+            kind:"manual"
+          });
+          renderRows();
+        };
+
+        $("importReceipt").onclick=importReceipt;
+        renderRows();
+      }
+
+      function renderRows(){
+        $("receiptRows").innerHTML=receipt.items.map(item=>`
+          <tr>
+            <td>
+              <input data-receipt-include="${item.id}" type="checkbox" ${item.included?"checked":""}>
+            </td>
+            <td>
+              <input class="receipt-name" data-receipt-name="${item.id}" value="${esc(item.name)}" placeholder="Item name">
+            </td>
+            <td>
+              <input class="receipt-qty" data-receipt-quantity="${item.id}" type="number" min="1" step="1" value="${item.quantity}">
+            </td>
+            <td>
+              <input class="receipt-price" data-receipt-total="${item.id}" type="number" min="0" step=".01" value="${Number(item.lineTotal).toFixed(2)}">
+            </td>
+            <td>
+              <select data-receipt-category="${item.id}">
+                ${state.categories.map(category=>`
+                  <option value="${category.id}" ${category.id===item.categoryId?"selected":""}>${esc(category.name)}</option>
+                `).join("")}
+              </select>
+            </td>
+            <td>
+              <select data-receipt-for="${item.id}">
+                ${FOR_OPTIONS.map(option=>`
+                  <option ${option===item.forWhom?"selected":""}>${option}</option>
+                `).join("")}
+              </select>
+            </td>
+            <td>
+              <button class="delete-button receipt-item-remove" data-remove-receipt="${item.id}" type="button">×</button>
+            </td>
+          </tr>
+        `).join("");
+
+        document.querySelectorAll("[data-receipt-include]").forEach(element=>{
+          element.onchange=()=>{
+            const item=receipt.items.find(row=>row.id===element.dataset.receiptInclude);
+            if(item)item.included=element.checked;
+            updateReceiptTotals();
+          };
+        });
+
+        document.querySelectorAll("[data-receipt-name]").forEach(element=>{
+          element.oninput=()=>{
+            const item=receipt.items.find(row=>row.id===element.dataset.receiptName);
+            if(item)item.name=element.value;
+          };
+        });
+
+        document.querySelectorAll("[data-receipt-quantity]").forEach(element=>{
+          element.oninput=()=>{
+            const item=receipt.items.find(row=>row.id===element.dataset.receiptQuantity);
+            if(item)item.quantity=Math.max(1,Number(element.value||1));
+          };
+        });
+
+        document.querySelectorAll("[data-receipt-total]").forEach(element=>{
+          element.oninput=()=>{
+            const item=receipt.items.find(row=>row.id===element.dataset.receiptTotal);
+            if(item)item.lineTotal=Math.max(0,Number(element.value||0));
+            updateReceiptTotals();
+          };
+        });
+
+        document.querySelectorAll("[data-receipt-category]").forEach(element=>{
+          element.onchange=()=>{
+            const item=receipt.items.find(row=>row.id===element.dataset.receiptCategory);
+            if(item)item.categoryId=element.value;
+          };
+        });
+
+        document.querySelectorAll("[data-receipt-for]").forEach(element=>{
+          element.onchange=()=>{
+            const item=receipt.items.find(row=>row.id===element.dataset.receiptFor);
+            if(item)item.forWhom=element.value;
+          };
+        });
+
+        document.querySelectorAll("[data-remove-receipt]").forEach(button=>{
+          button.onclick=()=>{
+            receipt.items=receipt.items.filter(item=>item.id!==button.dataset.removeReceipt);
+            renderRows();
+          };
+        });
+
+        updateReceiptTotals();
+      }
+
+      function updateReceiptTotals(){
+        const total=selectedTotal();
+        if($("receiptSelectedTotal"))$("receiptSelectedTotal").textContent=money(total);
+        if($("receiptFooterTotal"))$("receiptFooterTotal").textContent=`${money(total)} selected`;
+
+        const difference=receiptDifference();
+        if($("receiptDifferenceMessage")){
+          $("receiptDifferenceMessage").innerHTML=Math.abs(difference)>0.01?`
+            <div class="receipt-warning">
+              The selected item total differs from the printed receipt total by ${money(Math.abs(difference))}.
+              Review discounts, deposits, fees, or unreadable lines before importing.
+            </div>`:"";
+        }
+      }
+
+      async function importReceipt(){
+        const items=receipt.items.filter(item=>
+          item.included&&
+          item.name.trim()&&
+          Number(item.lineTotal)>0&&
+          item.categoryId
+        );
+
+        if(!items.length){
+          toast("Select at least one valid receipt item.");
+          return;
+        }
+
+        const button=$("importReceipt");
+        button.disabled=true;
+        button.textContent="Importing…";
+
+        try{
+          const batch=writeBatch(db);
+          const receiptId=crypto.randomUUID();
+
+          const receiptDocument=doc(col("receipts"));
+          batch.set(receiptDocument,{
+            receiptId,
+            merchant:receipt.merchant.trim()||"Receipt",
+            date:receipt.date||today(),
+            subtotal:Number(receipt.subtotal||0),
+            tax:Number(receipt.tax||0),
+            printedTotal:Number(receipt.total||0),
+            importedTotal:Number(selectedTotal().toFixed(2)),
+            itemCount:items.length,
+            sourceFileName:selectedFile?.name||"",
+            createdBy:state.user.uid,
+            createdAt:serverTimestamp()
+          });
+
+          items.forEach(item=>{
+            const transactionDocument=doc(col("transactions"));
+            batch.set(transactionDocument,{
+              type:"expense",
+              description:item.name.trim(),
+              amount:Number(Number(item.lineTotal).toFixed(2)),
+              date:receipt.date||today(),
+              categoryId:item.categoryId,
+              forWhom:item.forWhom||"Household",
+              notes:`Receipt: ${receipt.merchant.trim()||"Receipt"}`,
+              receiptId,
+              receiptMerchant:receipt.merchant.trim()||"Receipt",
+              receiptItemQuantity:Number(item.quantity||1),
+              receiptItemKind:item.kind||"item",
+              createdBy:state.user.uid,
+              createdAt:serverTimestamp()
+            });
+          });
+
+          await batch.commit();
+          cleanupPreview();
+          closeModal();
+          toast(`${items.length} receipt item${items.length===1?"":"s"} imported.`);
+        }catch(error){
+          console.error(error);
+          toast("The receipt items could not be saved.");
+          button.disabled=false;
+          button.textContent="Import selected items";
+        }
+      }
+
+      function showReceiptError(message){
+        $("receiptWorkflow").innerHTML=`
+          <div class="empty">
+            <div>
+              <strong>Receipt extraction failed</strong>
+              <p style="color:var(--muted);max-width:520px">${esc(message)}</p>
+              <div class="receipt-error-actions">
+                <button id="retryReceipt" class="primary" type="button">Try again</button>
+                <button id="cancelReceiptError" class="ghost" type="button">Cancel</button>
+              </div>
+            </div>
+          </div>`;
+
+        $("retryReceipt").onclick=selectedFile?showPreview:showUpload;
+        $("cancelReceiptError").onclick=closeReceipt;
+      }
     }
   </script>
 
