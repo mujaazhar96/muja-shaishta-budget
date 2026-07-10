@@ -830,6 +830,41 @@
       }
     }
 
+  
+    /* Mobile receipt button fix v2.7 */
+    @media (max-width: 900px) {
+      .topbar .actions {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 7px !important;
+      }
+
+      .topbar .actions .secondary,
+      .topbar .actions .primary {
+        display: inline-flex !important;
+        width: 42px !important;
+        height: 42px !important;
+        min-width: 42px !important;
+        padding: 0 !important;
+        border-radius: 11px !important;
+        font-size: 0 !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      .topbar .actions .secondary::before {
+        content: "📷";
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .topbar .actions .primary::before {
+        content: "+";
+        font-size: 25px;
+        line-height: 1;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -884,7 +919,7 @@
           <button id="mobileMenuButton" class="mobile-menu-button" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
           <div><p class="eyebrow">HOUSEHOLD FINANCE</p><h1 id="pageTitle">Dashboard</h1></div>
         </div>
-        <div class="actions"><button id="receiptButton" class="secondary">⇧ Upload receipt</button><button id="transactionButton" class="primary">＋ Add transaction</button></div>
+        <div class="actions"><button id="receiptButton" class="secondary" type="button" aria-label="Upload receipt" title="Upload receipt">⇧ Upload receipt</button><button id="transactionButton" class="primary" type="button" aria-label="Add transaction" title="Add transaction">＋ Add transaction</button></div>
       </div>
       <div id="monthPicker" class="month-picker card">
         <button id="previousMonth" class="icon-button">‹</button>
