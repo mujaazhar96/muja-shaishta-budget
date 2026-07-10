@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14231d">
+  <title>Muja & Shaishta Budget</title>
+  <style>
+    :root{
+      --bg:#f3f5f3;--card:#fff;--text:#17231d;--muted:#6d7872;--line:#dce3df;
+      --green:#1f4b3d;--green2:#34715b;--soft:#e8f1ed;--gold:#b9842e;
+      --red:#b42318;--redSoft:#fff1ef;--shadow:0 12px 34px rgba(18,42,32,.08);
+      --radius:18px
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+    button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+    .eyebrow{margin:0 0 5px;color:var(--gold);font-size:10px;font-weight:900;letter-spacing:.16em}
+    .login{min-height:100vh;display:grid;grid-template-columns:1.12fr .88fr;background:#13221c}
+    .login-hero{padding:60px;display:flex;flex-direction:column;justify-content:space-between;color:white;background:
+      radial-gradient(circle at 18% 20%,rgba(190,139,47,.21),transparent 34%),
+      radial-gradient(circle at 82% 76%,rgba(73,131,107,.27),transparent 38%),#13221c}
+    .logo{width:54px;height:54px;border-radius:17px;background:linear-gradient(135deg,#deb75e,#8d621d);display:grid;place-items:center;font-weight:900;color:white}
+    .login-hero h1{font-size:48px;line-height:1.07;max-width:650px;margin:22px 0 14px}.login-hero p{color:#c8d6cf;line-height:1.7;max-width:590px}
+    .hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:34px}.hero-item{border:1px solid #355047;border-radius:15px;padding:15px;background:rgba(255,255,255,.035)}
+    .hero-item strong{display:block;margin-bottom:5px}.hero-item span{color:#9fb2aa;font-size:12px}
+    .login-side{display:grid;place-items:center;padding:26px;background:#f6f7f6}.login-card{width:min(440px,100%);background:white;border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:0 28px 80px rgba(0,0,0,.2)}
+    .login-card h2{font-size:29px;margin:0 0 8px}.login-card>p{color:var(--muted);line-height:1.5;margin:0 0 24px}
+    .field{display:grid;gap:7px;margin-bottom:14px}.field span{font-size:12px;font-weight:750;color:var(--muted)}
+    input,select,textarea{width:100%;border:1px solid var(--line);border-radius:11px;background:white;padding:11px 12px;color:var(--text);outline:none}
+    input:focus,select:focus,textarea:focus{border-color:#75a18d;box-shadow:0 0 0 3px rgba(45,105,81,.1)}
+    .primary,.secondary,.ghost,.danger{border:0;border-radius:11px;padding:11px 15px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+    .primary{background:var(--green);color:white}.secondary{background:var(--soft);color:var(--green)}.ghost{background:#f1f3f2;color:#35413b}.danger{background:var(--red);color:white}
+    .wide-button{width:100%}.link-button{border:0;background:none;color:var(--green);font-weight:750;padding:10px}
+    .message{border-radius:11px;padding:10px 12px;font-size:13px;margin-bottom:13px}.message.error{background:var(--redSoft);border:1px solid #f3beb8;color:#8b1c13}.message.success{background:#eaf6ef;border:1px solid #b9dfca;color:#1c6541}
+    .preview-note{background:#fff8df;border:1px solid #ecd28c;color:#74540b;border-radius:11px;padding:10px 12px;font-size:12px;margin-bottom:13px}
+    .app{min-height:100vh;display:grid;grid-template-columns:255px 1fr}.sidebar{height:100vh;position:sticky;top:0;background:#14231d;color:white;padding:26px 19px;display:flex;flex-direction:column}
+    .brand{display:flex;align-items:center;gap:12px}.brand .logo{width:45px;height:45px;border-radius:14px}.brand div:last-child{display:grid}.brand span{color:#9eb1a8;font-size:12px;margin-top:3px}
+    nav{display:grid;gap:6px;margin-top:35px}nav button{border:0;background:transparent;color:#c7d2cd;border-radius:12px;padding:12px 13px;text-align:left;display:flex;gap:10px;align-items:center}nav button.active,nav button:hover{background:#23372f;color:white}
+    .user-card{margin-top:auto;border:1px solid #345046;border-radius:14px;padding:13px;display:grid;gap:8px}.user-card small{color:#a4b5ae;overflow:hidden;text-overflow:ellipsis}
+    main{padding:28px;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px}.topbar h1{font-size:28px;margin:0}.actions{display:flex;gap:9px}
+    .card,.metric{background:white;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.card{padding:21px}
+    .month-picker{width:max-content;display:flex;gap:13px;align-items:center;padding:11px;margin-bottom:17px}.month-picker div{min-width:170px;text-align:center;display:grid}.month-picker small{color:var(--muted)}
+    .icon-button,.delete-button{width:39px;height:39px;border:1px solid var(--line);border-radius:10px;background:white;display:grid;place-items:center}.delete-button{width:34px;height:34px;color:var(--red);border-color:#f0c1bc;background:#fff8f7;font-size:18px;font-weight:800}
+    .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:17px}.metric{padding:19px;display:grid;gap:8px}.metric span,.metric small{color:var(--muted)}.metric strong{font-size:26px}.metric.accent{background:var(--green);border-color:var(--green);color:white}.metric.accent span,.metric.accent small{color:#c9ded5}
+    .grid-2{display:grid;grid-template-columns:1.4fr 1fr;gap:17px;margin-bottom:17px}.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+    .section-title{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.section-title h2{font-size:17px;margin:0}.section-title p{color:var(--muted);font-size:13px;margin:4px 0 18px}
+    .progress{height:10px;background:#ebefed;border-radius:999px;overflow:hidden}.progress div{height:100%;background:linear-gradient(90deg,var(--green),#6d9e8a);border-radius:inherit}.progress div.warn{background:var(--red)}
+    .bar,.comparison{display:grid;gap:8px;margin:14px 0}.bar-head,.comparison-head,.meta{display:flex;justify-content:space-between;gap:12px}.comparison-head span,.meta{color:var(--muted);font-size:12px}
+    .compact-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}.compact-row>span:first-child{display:grid}.compact-row small{color:var(--muted);margin-top:3px}
+    .positive{color:var(--green);font-weight:850}.negative{color:var(--red);font-weight:850}.empty{min-height:130px;display:grid;place-items:center;text-align:center;color:var(--muted);padding:20px}
+    .toolbar{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;margin-bottom:18px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:820px}th,td{text-align:left;padding:12px 9px;border-bottom:1px solid var(--line);font-size:13px}th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+    .page-action{display:flex;justify-content:flex-end;margin-bottom:15px}.inline-form{display:flex;gap:8px}.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.tag{border:1px solid var(--line);background:#fafbfa;border-radius:999px;padding:7px 10px;display:flex;align-items:center;gap:7px}.tag button{border:0;background:none;color:var(--red);font-weight:900}
+    .saving-card{display:grid}.saving-card h2{font-size:18px;margin:13px 0 6px}.saving-card .balance{font-size:28px}.no-goal{background:#f5f7f6;color:var(--muted);border-radius:11px;padding:12px;font-size:13px;margin-top:13px}.saving-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}.saving-actions .secondary,.saving-actions .ghost{flex:1}
+    .budget-row{display:grid;grid-template-columns:190px 1fr 245px;gap:18px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}.budget-row>div:first-child{display:grid}.budget-row>div:first-child span{font-size:12px;color:var(--muted)}
+    .budget-input{display:grid;grid-template-columns:auto 1fr auto;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}.budget-input span{padding-left:10px;color:var(--muted)}.budget-input input{border:0}.budget-input button{height:100%;border:0;background:var(--green);color:white;padding:0 13px;font-weight:800}
+    .recurring-row{display:grid;grid-template-columns:1.3fr .8fr .7fr auto auto;gap:13px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.recurring-row>div{display:grid}.recurring-row span{font-size:12px;color:var(--muted);margin-top:3px}.status{border-radius:999px;padding:6px 9px;font-size:12px}.status.active{background:#e7f4ed;color:#17623e}.status.paused{background:#f1f1f1;color:#666}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(6,17,12,.67);display:grid;place-items:center;z-index:20;padding:18px}.modal{width:min(650px,100%);max-height:92vh;overflow:auto;background:white;border-radius:21px;padding:24px;box-shadow:0 30px 100px rgba(0,0,0,.35)}.modal.wide{width:min(1040px,100%)}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}.modal-head h2{margin:0}
+    .type-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}.type-toggle button{border:1px solid var(--line);border-radius:10px;background:white;padding:11px;font-weight:800}.type-toggle button.selected{background:var(--green);border-color:var(--green);color:white}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form-grid .full{grid-column:1/-1}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:21px}.category-control{display:grid;grid-template-columns:1fr auto;gap:7px}
+    .receipt-zone{min-height:220px;border:2px dashed #b9c8c1;border-radius:17px;background:#f7faf8;display:grid;place-content:center;justify-items:center;text-align:center;gap:8px;color:var(--green)}.receipt-zone input{display:none}.receipt-zone span{font-size:12px;color:var(--muted)}
+    .toast{position:fixed;right:20px;bottom:20px;background:#13221c;color:white;border-radius:11px;padding:12px 16px;box-shadow:var(--shadow);z-index:40}
+    @media(max-width:1050px){.metrics{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr 1fr}.budget-row{grid-template-columns:160px 1fr}.budget-input{grid-column:1/-1}.login-hero{padding:40px}.login-hero h1{font-size:39px}}
+    @media(max-width:780px){.login{grid-template-columns:1fr}.login-hero{display:none}.app{grid-template-columns:1fr}.sidebar{height:auto;position:static;padding:15px}nav{grid-template-columns:repeat(7,max-content);overflow:auto;margin-top:14px}.user-card{display:none}main{padding:17px 13px}.topbar{align-items:flex-start}.actions{flex-direction:column}.grid-2,.grid-3{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.recurring-row{grid-template-columns:1fr 1fr}.metrics{grid-template-columns:1fr 1fr}}
+    @media(max-width:500px){.metrics,.toolbar{grid-template-columns:1fr}.login-side{padding:14px}.login-card{padding:24px}.month-picker{width:100%;justify-content:space-between}.actions .secondary{display:none}}
+  </style>
+</head>
+<body>
+  <!-- This login page is real HTML, not generated by React. It therefore cannot be a blank page while Firebase is loading. -->
+  <section id="loginPage" class="login">
+    <div class="login-hero">
+      <div>
+        <div class="logo">M&S</div>
+        <h1>Our household finances, in one private place.</h1>
+        <p>Track expenses, budgets, savings, recurring costs and receipt items together—without splitting bills or calculating who owes whom.</p>
+        <div class="hero-grid">
+          <div class="hero-item"><strong>Private</strong><span>Only your two approved accounts can sign in.</span></div>
+          <div class="hero-item"><strong>Shared</strong><span>Firestore synchronizes changes across both devices.</span></div>
+          <div class="hero-item"><strong>Simple</strong><span>Track what each expense is for, not who paid.</span></div>
+        </div>
+      </div>
+      <small>Protected by Firebase Authentication and Firestore Security Rules.</small>
+    </div>
+    <div class="login-side">
+      <form id="loginForm" class="login-card">
+        <p class="eyebrow">MUJA & SHAISHTA</p>
+        <h2>Welcome back</h2>
+        <p>Sign in using one of the two Firebase accounts you created.</p>
+        <div id="previewNote" class="preview-note hidden">Local preview detected. The page is working, but Firebase login should be tested after hosting it on GitHub Pages or a local web server.</div>
+        <div id="loginMessage"></div>
+        <label class="field"><span>Email address</span><input id="email" type="email" autocomplete="email" required></label>
+        <label class="field"><span>Password</span><input id="password" type="password" autocomplete="current-password" required></label>
+        <button id="signInButton" class="primary wide-button" type="submit">Sign in</button>
+        <div style="text-align:center;margin-top:7px"><button id="forgotPassword" class="link-button" type="button">Forgot password?</button></div>
+      </form>
+    </div>
+  </section>
+
+  <section id="appPage" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">M&S</div><div><strong>Our Budget</strong><span>Muja & Shaishta</span></div></div>
+      <nav id="navigation">
+        <button class="active" data-view="dashboard">▦ Dashboard</button>
+        <button data-view="transactions">▤ Transactions</button>
+        <button data-view="budgets">◫ Monthly Budgets</button>
+        <button data-view="savings">◉ Savings</button>
+        <button data-view="recurring">↻ Recurring</button>
+        <button data-view="categories">⌑ Categories</button>
+        <button data-view="settings">⚙ Settings</button>
+      </nav>
+      <div class="user-card"><small id="userEmail"></small><button id="signOutButton" class="ghost">Sign out</button></div>
+    </aside>
+    <main>
+      <div class="topbar">
+        <div><p class="eyebrow">HOUSEHOLD FINANCE</p><h1 id="pageTitle">Dashboard</h1></div>
+        <div class="actions"><button id="receiptButton" class="secondary">⇧ Upload receipt</button><button id="transactionButton" class="primary">＋ Add transaction</button></div>
+      </div>
+      <div id="monthPicker" class="month-picker card">
+        <button id="previousMonth" class="icon-button">‹</button>
+        <div><small>Selected month</small><strong id="monthLabel"></strong></div>
+        <button id="nextMonth" class="icon-button">›</button>
+      </div>
+      <section id="dashboardView"></section>
+      <section id="transactionsView" class="hidden"></section>
+      <section id="budgetsView" class="hidden"></section>
+      <section id="savingsView" class="hidden"></section>
+      <section id="recurringView" class="hidden"></section>
+      <section id="categoriesView" class="hidden"></section>
+      <section id="settingsView" class="hidden"></section>
+    </main>
+  </section>
+
+  <div id="modalRoot"></div>
+  <div id="toast" class="toast hidden"></div>
+
+  <script>
+    if (location.protocol === "file:") document.getElementById("previewNote").classList.remove("hidden");
+    window.addEventListener("error", function(event){
+      var box=document.getElementById("loginMessage");
+      if(box && !document.getElementById("appPage").classList.contains("hidden")){
+        console.error(event.error || event.message);
+      }
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+    import {
+      getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut,
+      sendPasswordResetEmail,setPersistence,browserLocalPersistence
+    } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+    import {
+      getFirestore,collection,doc,addDoc,setDoc,deleteDoc,onSnapshot,
+      serverTimestamp,writeBatch,getDocs
+    } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+    const firebaseConfig={
+      apiKey:"AIzaSyCvadQAexwgbuEHvmm4DjyUCnP8nFnO-0I",
+      authDomain:"muja-shaishta-budget.firebaseapp.com",
+      projectId:"muja-shaishta-budget",
+      storageBucket:"muja-shaishta-budget.firebasestorage.app",
+      messagingSenderId:"482994579280",
+      appId:"1:482994579280:web:2d3caee2ecdaad8abb6e55"
+    };
+    const APPROVED={
+      "ilvNAYP3ZFVsZHX0DNDuSVvRcya2":"Muja",
+      "HfVCDKd7Nbe3FfOYVwd8FLClG4z2":"Shaishta"
+    };
+    const HOUSEHOLD="muja-shaishta";
+    const FOR_OPTIONS=["Household","Muja","Shaishta"];
+    const DEFAULT_CATEGORIES=["Groceries","Dining Out","Housing","Utilities","Transportation","Car","Shopping","Health","Entertainment","Personal Care","Gifts","Other"];
+
+    const app=initializeApp(firebaseConfig);
+    const auth=getAuth(app);
+    const db=getFirestore(app);
+    setPersistence(auth,browserLocalPersistence).catch(console.error);
+
+    const state={
+      user:null,view:"dashboard",month:new Date().toISOString().slice(0,7),
+      categories:[],transactions:[],savings:[],budgets:[],recurring:[],unsubs:[]
+    };
+    const $=id=>document.getElementById(id);
+    const money=n=>new Intl.NumberFormat("en-CA",{style:"currency",currency:"CAD"}).format(Number(n||0));
+    const today=()=>new Date().toISOString().slice(0,10);
+    const monthOf=d=>String(d||"").slice(0,7);
+    const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+    const col=name=>collection(db,"households",HOUSEHOLD,name);
+    const ref=(name,id)=>doc(db,"households",HOUSEHOLD,name,id);
+    const sum=list=>list.reduce((s,x)=>s+Number(x.amount||0),0);
+
+    function toast(message){$("toast").textContent=message;$("toast").classList.remove("hidden");clearTimeout(toast.timer);toast.timer=setTimeout(()=>$("toast").classList.add("hidden"),2600)}
+    function loginMessage(message,type="error"){$("loginMessage").innerHTML=message?`<div class="message ${type}">${esc(message)}</div>`:""}
+    function authError(error){
+      const code=error?.code||"";
+      if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found"))return"The email or password is incorrect.";
+      if(code.includes("too-many-requests"))return"Too many attempts. Wait and try again.";
+      if(code.includes("unauthorized-domain"))return"This domain must be added under Firebase Authentication → Settings → Authorized domains.";
+      if(code.includes("network-request-failed"))return"Network error. Check your internet connection.";
+      return error?.message?.replace("Firebase: ","")||"Unable to sign in.";
+    }
+
+    $("loginForm").addEventListener("submit",async e=>{
+      e.preventDefault();loginMessage("");const b=$("signInButton");b.disabled=true;b.textContent="Signing in…";
+      try{
+        const result=await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
+        if(!APPROVED[result.user.uid]){await signOut(auth);throw new Error("This account is not approved for this household.");}
+      }catch(error){loginMessage(authError(error));}
+      finally{b.disabled=false;b.textContent="Sign in";}
+    });
+    $("forgotPassword").onclick=async()=>{
+      const email=$("email").value.trim();if(!email){loginMessage("Enter your email address first.");return}
+      try{await sendPasswordResetEmail(auth,email);loginMessage("Password reset email sent.","success")}catch(error){loginMessage(authError(error))}
+    };
+    $("signOutButton").onclick=()=>signOut(auth);
+
+    onAuthStateChanged(auth,async user=>{
+      state.unsubs.forEach(fn=>fn());state.unsubs=[];
+      if(!user){
+        state.user=null;$("appPage").classList.add("hidden");$("loginPage").classList.remove("hidden");return;
+      }
+      if(!APPROVED[user.uid]){await signOut(auth);loginMessage("This account is not approved.");return}
+      state.user=user;$("userEmail").textContent=user.email;
+      $("loginPage").classList.add("hidden");$("appPage").classList.remove("hidden");
+      try{
+        await setDoc(doc(db,"users",user.uid),{name:APPROVED[user.uid],email:user.email,householdId:HOUSEHOLD,lastLoginAt:serverTimestamp()},{merge:true});
+        await setDoc(doc(db,"households",HOUSEHOLD),{name:"Muja & Shaishta",updatedAt:serverTimestamp()},{merge:true});
+      }catch(error){console.error(error)}
+      subscribe();
+    });
+
+    async function seedCategories(){
+      const snap=await getDocs(col("categories"));if(!snap.empty)return;
+      const batch=writeBatch(db);
+      DEFAULT_CATEGORIES.forEach(name=>{
+        const id=name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+        batch.set(ref("categories",id),{name,type:"expense",createdAt:serverTimestamp()});
+      });
+      await batch.commit();
+    }
+    function subscribe(){
+      seedCategories().catch(console.error);
+      listen("categories",items=>state.categories=items.sort((a,b)=>a.name.localeCompare(b.name)));
+      listen("transactions",items=>state.transactions=items);
+      listen("savings",items=>state.savings=items.sort((a,b)=>a.name.localeCompare(b.name)));
+      listen("budgets",items=>state.budgets=items);
+      listen("recurringExpenses",items=>state.recurring=items);
+    }
+    function listen(name,assign){
+      state.unsubs.push(onSnapshot(col(name),snap=>{assign(snap.docs.map(d=>({id:d.id,...d.data()})));render()},error=>{
+        console.error(error);toast(error.code==="permission-denied"?"Firestore permission denied. Recheck the published rules.":"Unable to synchronize data.");
+      }));
+    }
+
+    $("navigation").onclick=e=>{
+      const button=e.target.closest("[data-view]");if(!button)return;
+      state.view=button.dataset.view;document.querySelectorAll("#navigation button").forEach(b=>b.classList.toggle("active",b===button));render();
+    };
+    $("previousMonth").onclick=()=>shiftMonth(-1);$("nextMonth").onclick=()=>shiftMonth(1);
+    $("transactionButton").onclick=openTransactionModal;$("receiptButton").onclick=openReceiptModal;
+
+    function shiftMonth(direction){const d=new Date(`${state.month}-15T12:00:00`);d.setMonth(d.getMonth()+direction);state.month=d.toISOString().slice(0,7);render()}
+    function currentTransactions(){return state.transactions.filter(t=>monthOf(t.date)===state.month)}
+    function categoryName(id){return state.categories.find(c=>c.id===id)?.name||"Uncategorized"}
+    function savingName(id){return state.savings.find(s=>s.id===id)?.name||"Unknown saving"}
+    function description(t){return t.description||(t.type==="saving"?`Contribution to ${savingName(t.savingId)}`:"Expense")}
+    function balances(){const b={};state.savings.forEach(s=>b[s.id]=0);state.transactions.filter(t=>t.type==="saving").forEach(t=>b[t.savingId]=(b[t.savingId]||0)+Number(t.amount||0));return b}
+
+    function render(){
+      if(!state.user)return;
+      const titles={dashboard:"Dashboard",transactions:"Transactions",budgets:"Monthly Budgets",savings:"Savings",recurring:"Recurring Expenses",categories:"Categories",settings:"Data & Settings"};
+      $("pageTitle").textContent=titles[state.view];
+      $("monthLabel").textContent=new Date(`${state.month}-15T12:00:00`).toLocaleDateString("en-CA",{month:"long",year:"numeric"});
+      $("monthPicker").classList.toggle("hidden",["categories","settings"].includes(state.view));
+      ["dashboard","transactions","budgets","savings","recurring","categories","settings"].forEach(v=>$(`${v}View`).classList.toggle("hidden",v!==state.view));
+      if(state.view==="dashboard")renderDashboard();
+      if(state.view==="transactions")renderTransactions();
+      if(state.view==="budgets")renderBudgets();
+      if(state.view==="savings")renderSavings();
+      if(state.view==="recurring")renderRecurring();
+      if(state.view==="categories")renderCategories();
+      if(state.view==="settings")renderSettings();
+    }
+    const title=(h,p)=>`<div class="section-title"><div><h2>${h}</h2><p>${p}</p></div></div>`;
+    const empty=t=>`<div class="empty">${esc(t)}</div>`;
+    const progress=(value,max,warn=false)=>`<div class="progress"><div class="${warn?"warn":""}" style="width:${Math.min(100,max?value/max*100:0)}%"></div></div>`;
+
+    function renderDashboard(){
+      const tx=currentTransactions(),expenses=tx.filter(t=>t.type==="expense"),savingTx=tx.filter(t=>t.type==="saving");
+      const spent=sum(expenses),saved=sum(savingTx),budget=sum(state.budgets.filter(b=>b.month===state.month)),remaining=budget-spent;
+      const byCategory={};expenses.forEach(t=>byCategory[t.categoryId]=(byCategory[t.categoryId]||0)+Number(t.amount||0));
+      const cats=Object.entries(byCategory).sort((a,b)=>b[1]-a[1]),maxCat=cats[0]?.[1]||1;
+      const forTotals=Object.fromEntries(FOR_OPTIONS.map(x=>[x,sum(expenses.filter(t=>t.forWhom===x))])),maxFor=Math.max(...Object.values(forTotals),1);
+      const saveBalances=balances(),recent=tx.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,6);
+      $("dashboardView").innerHTML=`
+        <div class="metrics">
+          <article class="metric"><span>Monthly budget</span><strong>${money(budget)}</strong><small>${budget?`${Math.round(Math.min(100,spent/budget*100))}% used`:"Set category budgets"}</small></article>
+          <article class="metric"><span>Actual spending</span><strong>${money(spent)}</strong><small>${expenses.length} expense entries</small></article>
+          <article class="metric"><span>${remaining>=0?"Budget remaining":"Over budget"}</span><strong>${money(Math.abs(remaining))}</strong><small>${remaining>=0?"Available this month":"Spending exceeded budget"}</small></article>
+          <article class="metric accent"><span>Saved this month</span><strong>${money(saved)}</strong><small>${savingTx.length} contributions</small></article>
+        </div>
+        <div class="grid-2">
+          <article class="card">${title("Budget progress","Monthly budget versus actual spending")}${progress(spent,budget,budget>0&&spent>budget)}<div class="meta"><span>${money(spent)} spent</span><span>${money(budget)} budgeted</span></div></article>
+          <article class="card">${title("Spending for","Household and personal expense totals")}${FOR_OPTIONS.map(p=>`<div class="comparison"><div class="comparison-head"><strong>${p}</strong><span>${money(forTotals[p])}</span></div>${progress(forTotals[p],maxFor)}</div>`).join("")}</article>
+        </div>
+        <div class="grid-2">
+          <article class="card">${title("Top categories","Highest expense categories this month")}${cats.length?cats.slice(0,7).map(([id,v])=>`<div class="bar"><div class="bar-head"><span>${esc(categoryName(id))}</span><strong>${money(v)}</strong></div>${progress(v,maxCat)}</div>`).join(""):empty("No expenses recorded this month.")}</article>
+          <article class="card">${title("Savings","Current balances across all savings")}${state.savings.length?state.savings.slice(0,6).map(s=>`<div class="bar"><div class="bar-head"><strong>${esc(s.name)}</strong><span>${money(saveBalances[s.id]||0)}</span></div>${s.targetAmount?progress(saveBalances[s.id]||0,Number(s.targetAmount)):``}</div>`).join(""):empty("Create your first saving.")}</article>
+        </div>
+        <article class="card">${title("Recent activity","Latest transactions this month")}${recent.length?recent.map(t=>`<div class="compact-row"><span><strong>${esc(description(t))}</strong><small>${esc(t.date)} · ${esc(t.type==="expense"?categoryName(t.categoryId):savingName(t.savingId))}</small></span><strong class="${t.type==="saving"?"positive":"negative"}">${t.type==="saving"?"+":"−"}${money(t.amount)}</strong></div>`).join(""):empty("No activity this month.")}</article>`;
+    }
+
+    function renderTransactions(){
+      const list=state.transactions.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+      $("transactionsView").innerHTML=`<article class="card">
+        <div class="toolbar"><input id="searchTx" placeholder="Search transactions"><select id="forFilter"><option value="">All: For</option>${FOR_OPTIONS.map(x=>`<option>${x}</option>`).join("")}</select><select id="typeFilter"><option value="">All types</option><option value="expense">Expense</option><option value="saving">Saving</option></select><button id="inlineAddTx" class="primary">＋ Add</button></div>
+        <div id="transactionResults">${transactionTable(list)}</div>
+      </article>`;
+      $("inlineAddTx").onclick=openTransactionModal;
+      ["searchTx","forFilter","typeFilter"].forEach(id=>$(id).addEventListener("input",()=>{
+        const q=$("searchTx").value.toLowerCase(),f=$("forFilter").value,type=$("typeFilter").value;
+        const filtered=list.filter(t=>(!type||t.type===type)&&(!f||t.forWhom===f)&&`${description(t)} ${t.type==="expense"?categoryName(t.categoryId):savingName(t.savingId)}`.toLowerCase().includes(q));
+        $("transactionResults").innerHTML=transactionTable(filtered);wireTransactionDeletes();
+      }));
+      wireTransactionDeletes();
+    }
+    function transactionTable(list){
+      if(!list.length)return empty("No transactions found.");
+      return `<div class="table-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Category / Saving</th><th>For</th><th>Type</th><th>Amount</th><th>Delete</th></tr></thead><tbody>${list.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(description(t))}</td><td>${esc(t.type==="expense"?categoryName(t.categoryId):savingName(t.savingId))}</td><td>${esc(t.forWhom||"Household")}</td><td>${esc(t.type)}</td><td class="${t.type==="saving"?"positive":"negative"}">${t.type==="saving"?"+":"−"}${money(t.amount)}</td><td><button class="delete-button" data-delete-transaction="${t.id}" title="Delete transaction">×</button></td></tr>`).join("")}</tbody></table></div>`;
+    }
+    function wireTransactionDeletes(){
+      document.querySelectorAll("[data-delete-transaction]").forEach(button=>button.onclick=async()=>{
+        const item=state.transactions.find(t=>t.id===button.dataset.deleteTransaction);if(!item)return;
+        const label=description(item);
+        if(!confirm(`Delete "${label}" for ${money(item.amount)}?\n\nThis permanently removes it from Firestore.`))return;
+        try{await deleteDoc(ref("transactions",item.id));toast("Transaction deleted.")}catch(error){console.error(error);toast("Unable to delete transaction.")}
+      });
+    }
+
+    function renderBudgets(){
+      const expenses=currentTransactions().filter(t=>t.type==="expense");
+      $("budgetsView").innerHTML=`<article class="card">${title("Category budgets","Set a monthly limit and compare it with actual spending")}${state.categories.map(c=>{
+        const record=state.budgets.find(b=>b.month===state.month&&b.categoryId===c.id),amount=Number(record?.amount||0),spent=sum(expenses.filter(t=>t.categoryId===c.id));
+        return `<div class="budget-row"><div><strong>${esc(c.name)}</strong><span>${money(spent)} spent</span></div>${progress(spent,amount,amount>0&&spent>amount)}<div class="budget-input"><span>$</span><input id="budget-${c.id}" type="number" min="0" step="10" value="${amount}"><button data-budget="${c.id}">Save</button></div></div>`;
+      }).join("")}</article>`;
+      document.querySelectorAll("[data-budget]").forEach(button=>button.onclick=async()=>{
+        const categoryId=button.dataset.budget,id=`${state.month}_${categoryId}`,amount=Number($(`budget-${categoryId}`).value||0);
+        await setDoc(ref("budgets",id),{month:state.month,categoryId,amount,updatedAt:serverTimestamp()},{merge:true});toast("Budget updated.");
+      });
+    }
+
+    function renderSavings(){
+      const b=balances();
+      $("savingsView").innerHTML=`<div class="page-action"><button id="newSaving" class="primary">＋ New saving</button></div>
+        ${state.savings.length?`<div class="grid-3">${state.savings.map(s=>{
+          const balance=b[s.id]||0,target=Number(s.targetAmount||0);
+          return `<article class="card saving-card"><span>Saving</span><h2>${esc(s.name)}</h2><strong class="balance">${money(balance)}</strong>
+            ${target?`<div class="meta"><span>${Math.min(100,Math.round(balance/target*100))}% complete</span><span>${money(target)} goal</span></div>${progress(balance,target)}<div class="meta"><span>${s.targetDate?`Target: ${esc(s.targetDate)}`:"No target date"}</span><span>${money(Math.max(0,target-balance))} remaining</span></div>`:`<div class="no-goal">No goal set. This saving can still receive contributions.</div>`}
+            <div class="saving-actions"><button class="secondary" data-contribute="${s.id}">Add money</button><button class="ghost" data-goal="${s.id}">${target?"Edit goal":"Add goal"}</button></div>
+          </article>`;
+        }).join("")}</div>`:`<article class="card">${empty("No savings yet. Create Emergency Fund, Travel, Investments or General Savings.")}</article>`}`;
+      $("newSaving").onclick=openSavingModal;
+      document.querySelectorAll("[data-contribute]").forEach(x=>x.onclick=()=>openContributionModal(x.dataset.contribute));
+      document.querySelectorAll("[data-goal]").forEach(x=>x.onclick=()=>openGoalModal(x.dataset.goal));
+    }
+
+    function renderRecurring(){
+      const list=state.recurring.slice().sort((a,b)=>String(a.nextDue).localeCompare(String(b.nextDue)));
+      $("recurringView").innerHTML=`<div class="page-action"><button id="newRecurring" class="primary">＋ New recurring expense</button></div><article class="card">${list.length?list.map(r=>`<div class="recurring-row"><div><strong>${esc(r.name)}</strong><span>${esc(r.frequency)} · ${esc(r.nextDue||"No next date")}</span></div><div><strong>${money(r.amount)}</strong><span>${esc(categoryName(r.categoryId))}</span></div><span class="status ${r.active===false?"paused":"active"}">${r.active===false?"Paused":"Active"}</span><button class="secondary" data-pay="${r.id}">✓ Mark paid</button><button class="delete-button" data-delete-recurring="${r.id}">×</button></div>`).join(""):empty("No recurring expenses yet.")}</article>`;
+      $("newRecurring").onclick=openRecurringModal;
+      document.querySelectorAll("[data-pay]").forEach(x=>x.onclick=()=>markPaid(x.dataset.pay));
+      document.querySelectorAll("[data-delete-recurring]").forEach(x=>x.onclick=async()=>{if(confirm("Delete this recurring expense?"))await deleteDoc(ref("recurringExpenses",x.dataset.deleteRecurring))});
+    }
+
+    function renderCategories(){
+      $("categoriesView").innerHTML=`<article class="card">${title("Expense categories","New categories automatically appear in Add Transaction for both users")}<form id="categoryForm" class="inline-form"><input id="categoryName" maxlength="40" placeholder="New expense category" required><button class="primary">Add category</button></form><div class="tags">${state.categories.map(c=>`<span class="tag">${esc(c.name)}<button data-delete-category="${c.id}">×</button></span>`).join("")}</div></article>`;
+      $("categoryForm").onsubmit=async e=>{e.preventDefault();const name=$("categoryName").value.trim();if(!name)return;if(state.categories.some(c=>c.name.toLowerCase()===name.toLowerCase())){toast("That category already exists.");return}await addDoc(col("categories"),{name,type:"expense",createdAt:serverTimestamp()});$("categoryName").value="";toast("Category added.")};
+      document.querySelectorAll("[data-delete-category]").forEach(x=>x.onclick=async()=>{const id=x.dataset.deleteCategory;if(state.transactions.some(t=>t.categoryId===id)||state.recurring.some(r=>r.categoryId===id)){toast("This category is currently used.");return}if(confirm("Delete this category?"))await deleteDoc(ref("categories",id))});
+    }
+
+    function renderSettings(){
+      $("settingsView").innerHTML=`<div class="grid-3"><article class="card">${title("Firebase","Live shared database")}<p><strong>Project:</strong> muja-shaishta-budget</p><p><strong>Household:</strong> ${HOUSEHOLD}</p><p><strong>Signed in:</strong> ${esc(state.user.email)}</p></article><article class="card">${title("Transaction deletion","Available in the Transactions page")}<p>Every transaction has a red delete button. The app asks for confirmation before permanently deleting it from Firestore.</p></article><article class="card">${title("Security","Two approved accounts only")}<p>Authentication and Firestore rules should both be restricted to the two approved Firebase UIDs.</p></article></div>`;
+    }
+
+    function modal(titleText,body,onReady){
+      $("modalRoot").innerHTML=`<div class="modal-backdrop"><section class="modal"><div class="modal-head"><div><p class="eyebrow">MUJA & SHAISHTA</p><h2>${esc(titleText)}</h2></div><button id="closeModal" class="icon-button">×</button></div>${body}</section></div>`;
+      $("closeModal").onclick=closeModal;document.querySelector(".modal-backdrop").onmousedown=e=>{if(e.target===e.currentTarget)closeModal()};onReady?.();
+    }
+    function closeModal(){$("modalRoot").innerHTML=""}
+    const field=(label,control,full=false)=>`<label class="field ${full?"full":""}"><span>${label}</span>${control}</label>`;
+    const formActions=label=>`<div class="modal-actions"><button id="cancelModal" type="button" class="ghost">Cancel</button><button class="primary" type="submit">${label}</button></div>`;
+    const categoryOptions=()=>state.categories.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");
+    const savingOptions=()=>state.savings.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
+
+    function openTransactionModal(){
+      if(!state.categories.length){toast("Categories are loading.");return}
+      let type="expense";
+      modal("Add transaction",`<form id="transactionForm"><div class="type-toggle"><button id="expenseTab" type="button" class="selected">Expense</button><button id="savingTab" type="button">Saving</button></div><div id="transactionFields"></div>${formActions("Save transaction")}</form>`,()=>{
+        $("cancelModal").onclick=closeModal;
+        const fields=()=>{
+          $("transactionFields").innerHTML=type==="expense"?`<div class="form-grid">
+            ${field("Description",`<input id="txDescription" required placeholder="e.g., Weekly groceries">`)}
+            ${field("Amount",`<input id="txAmount" required type="number" min=".01" step=".01">`)}
+            ${field("Date",`<input id="txDate" required type="date" value="${today()}">`)}
+            ${field("Category",`<div class="category-control"><select id="txCategory">${categoryOptions()}</select><button id="newCategoryInline" type="button" class="secondary">＋ New</button></div>`)}
+            ${field("For",`<select id="txFor">${FOR_OPTIONS.map(x=>`<option>${x}</option>`).join("")}</select>`)}
+            ${field("Notes",`<input id="txNotes" placeholder="Optional">`,true)}
+          </div>`:`<div class="form-grid">
+            ${field("Amount",`<input id="txAmount" required type="number" min=".01" step=".01">`)}
+            ${field("Date",`<input id="txDate" required type="date" value="${today()}">`)}
+            ${field("Save to",state.savings.length?`<select id="txSaving">${savingOptions()}</select>`:`<div class="message error">Create a saving first.</div>`,true)}
+            ${field("Notes",`<input id="txNotes" placeholder="Optional">`,true)}
+          </div>`;
+          if(type==="expense")$("newCategoryInline").onclick=async()=>{const name=prompt("New expense category name:")?.trim();if(!name)return;const created=await addDoc(col("categories"),{name,type:"expense",createdAt:serverTimestamp()});const option=document.createElement("option");option.value=created.id;option.textContent=name;option.selected=true;$("txCategory").append(option)};
+        };
+        fields();
+        $("expenseTab").onclick=()=>{type="expense";$("expenseTab").classList.add("selected");$("savingTab").classList.remove("selected");fields()};
+        $("savingTab").onclick=()=>{type="saving";$("savingTab").classList.add("selected");$("expenseTab").classList.remove("selected");fields()};
+        $("transactionForm").onsubmit=async e=>{
+          e.preventDefault();if(type==="saving"&&!state.savings.length){toast("Create a saving first.");return}
+          const payload=type==="expense"?{
+            type,description:$("txDescription").value.trim(),amount:Number($("txAmount").value),date:$("txDate").value,categoryId:$("txCategory").value,forWhom:$("txFor").value,notes:$("txNotes").value.trim(),createdBy:state.user.uid,createdAt:serverTimestamp()
+          }:{
+            type,description:$("txNotes").value.trim()||"Saving contribution",amount:Number($("txAmount").value),date:$("txDate").value,savingId:$("txSaving").value,forWhom:"Household",notes:$("txNotes").value.trim(),createdBy:state.user.uid,createdAt:serverTimestamp()
+          };
+          await addDoc(col("transactions"),payload);closeModal();toast("Transaction saved.");
+        };
+      });
+    }
+
+    function openSavingModal(){
+      modal("Create saving",`<form id="savingForm"><div class="form-grid">${field("Saving name",`<input id="savingNewName" required placeholder="e.g., Emergency Fund">`,true)}</div>${formActions("Create saving")}</form>`,()=>{
+        $("cancelModal").onclick=closeModal;$("savingForm").onsubmit=async e=>{e.preventDefault();await addDoc(col("savings"),{name:$("savingNewName").value.trim(),targetAmount:null,targetDate:null,createdAt:serverTimestamp()});closeModal();toast("Saving created.")}
+      });
+    }
+    function openContributionModal(id){
+      const item=state.savings.find(s=>s.id===id);if(!item)return;
+      modal(`Add money to ${item.name}`,`<form id="contributionForm"><div class="form-grid">${field("Amount",`<input id="contributionAmount" required type="number" min=".01" step=".01">`)}${field("Date",`<input id="contributionDate" required type="date" value="${today()}">`)}${field("Notes",`<input id="contributionNotes" placeholder="Optional">`,true)}</div>${formActions("Add contribution")}</form>`,()=>{
+        $("cancelModal").onclick=closeModal;$("contributionForm").onsubmit=async e=>{e.preventDefault();await addDoc(col("transactions"),{type:"saving",description:$("contributionNotes").value.trim()||"Saving contribution",amount:Number($("contributionAmount").value),date:$("contributionDate").value,savingId:id,forWhom:"Household",createdBy:state.user.uid,createdAt:serverTimestamp()});closeModal();toast("Contribution added.")}
+      });
+    }
+    function openGoalModal(id){
+      const item=state.savings.find(s=>s.id===id);if(!item)return;
+      modal(`${item.targetAmount?"Edit":"Add"} goal`, `<form id="goalForm"><div class="form-grid">${field("Target amount",`<input id="goalAmount" required type="number" min="1" step=".01" value="${item.targetAmount||""}">`)}${field("Target date",`<input id="goalDate" type="date" value="${item.targetDate||""}">`)}</div><div class="modal-actions">${item.targetAmount?`<button id="removeGoal" type="button" class="danger">Remove goal</button>`:""}<button id="cancelModal" type="button" class="ghost">Cancel</button><button class="primary">Save goal</button></div></form>`,()=>{
+        $("cancelModal").onclick=closeModal;
+        if($("removeGoal"))$("removeGoal").onclick=async()=>{await setDoc(ref("savings",id),{targetAmount:null,targetDate:null},{merge:true});closeModal();toast("Goal removed.")};
+        $("goalForm").onsubmit=async e=>{e.preventDefault();await setDoc(ref("savings",id),{targetAmount:Number($("goalAmount").value),targetDate:$("goalDate").value||null},{merge:true});closeModal();toast("Goal saved.")}
+      });
+    }
+
+    function openRecurringModal(){
+      modal("New recurring expense",`<form id="recurringForm"><div class="form-grid">
+        ${field("Name",`<input id="recurringName" required placeholder="e.g., Car insurance">`,true)}
+        ${field("Amount",`<input id="recurringAmount" required type="number" min=".01" step=".01">`)}
+        ${field("Category",`<select id="recurringCategory">${categoryOptions()}</select>`)}
+        ${field("For",`<select id="recurringFor">${FOR_OPTIONS.map(x=>`<option>${x}</option>`).join("")}</select>`)}
+        ${field("Frequency",`<select id="recurringFrequency"><option>Weekly</option><option>Biweekly</option><option selected>Monthly</option><option>Yearly</option></select>`)}
+        ${field("Next due date",`<input id="recurringDate" type="date" value="${today()}">`)}
+      </div>${formActions("Create recurring expense")}</form>`,()=>{
+        $("cancelModal").onclick=closeModal;$("recurringForm").onsubmit=async e=>{e.preventDefault();await addDoc(col("recurringExpenses"),{name:$("recurringName").value.trim(),amount:Number($("recurringAmount").value),categoryId:$("recurringCategory").value,forWhom:$("recurringFor").value,frequency:$("recurringFrequency").value,nextDue:$("recurringDate").value,active:true,createdAt:serverTimestamp()});closeModal();toast("Recurring expense created.")}
+      });
+    }
+    async function markPaid(id){
+      const r=state.recurring.find(x=>x.id===id);if(!r)return;
+      await addDoc(col("transactions"),{type:"expense",description:r.name,amount:Number(r.amount),date:today(),categoryId:r.categoryId,forWhom:r.forWhom,notes:"Recurring expense",createdBy:state.user.uid,createdAt:serverTimestamp()});toast("Recurring expense recorded.");
+    }
+
+    function openReceiptModal(){
+      modal("Upload receipt",`<div class="receipt-zone"><strong>Receipt extraction will be connected to Gemini next</strong><span>The Firebase login and Firestore application are active. For now, add the receipt items through Add Transaction.</span></div><div class="modal-actions"><button id="cancelModal" class="ghost">Close</button></div>`,()=>{$("cancelModal").onclick=closeModal});
+    }
+  </script>
+</body>
+</html>
