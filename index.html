@@ -63,6 +63,256 @@
     @media(max-width:1050px){.metrics{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr 1fr}.budget-row{grid-template-columns:160px 1fr}.budget-input{grid-column:1/-1}.login-hero{padding:40px}.login-hero h1{font-size:39px}}
     @media(max-width:780px){.login{grid-template-columns:1fr}.login-hero{display:none}.app{grid-template-columns:1fr}.sidebar{height:auto;position:static;padding:15px}nav{grid-template-columns:repeat(7,max-content);overflow:auto;margin-top:14px}.user-card{display:none}main{padding:17px 13px}.topbar{align-items:flex-start}.actions{flex-direction:column}.grid-2,.grid-3{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.recurring-row{grid-template-columns:1fr 1fr}.metrics{grid-template-columns:1fr 1fr}}
     @media(max-width:500px){.metrics,.toolbar{grid-template-columns:1fr}.login-side{padding:14px}.login-card{padding:24px}.month-picker{width:100%;justify-content:space-between}.actions .secondary{display:none}}
+  
+    /* Mobile layout v2.4 */
+    @media (max-width: 780px) {
+      body { padding-bottom: 74px; }
+
+      .app {
+        display: block;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: auto;
+        width: 100%;
+        height: 68px;
+        padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+        z-index: 50;
+        border-top: 1px solid #345046;
+        box-shadow: 0 -8px 28px rgba(9, 25, 18, .18);
+      }
+
+      .sidebar .brand,
+      .sidebar .user-card {
+        display: none;
+      }
+
+      .sidebar nav {
+        margin: 0;
+        height: 100%;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(72px, 1fr);
+        gap: 3px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        align-items: stretch;
+      }
+
+      .sidebar nav::-webkit-scrollbar { display: none; }
+
+      .sidebar nav button {
+        min-width: 72px;
+        padding: 7px 6px;
+        border-radius: 10px;
+        justify-content: center;
+        text-align: center;
+        white-space: nowrap;
+        font-size: 11px;
+        line-height: 1.15;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .sidebar nav button.active {
+        background: #2a4137;
+      }
+
+      main {
+        padding: 15px 11px 26px;
+      }
+
+      .topbar {
+        align-items: center;
+        margin-bottom: 14px;
+      }
+
+      .topbar h1 {
+        font-size: 24px;
+      }
+
+      .topbar .eyebrow {
+        font-size: 9px;
+      }
+
+      .actions {
+        flex-direction: row;
+      }
+
+      .actions .secondary {
+        display: none;
+      }
+
+      .actions .primary {
+        min-height: 39px;
+        padding: 9px 12px;
+        font-size: 13px;
+      }
+
+      .month-picker {
+        width: 100%;
+        margin-bottom: 14px;
+        padding: 9px;
+        border-radius: 15px;
+        justify-content: space-between;
+      }
+
+      .month-picker div {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .month-picker .icon-button {
+        width: 36px;
+        height: 36px;
+      }
+
+      .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .metric {
+        min-height: 126px;
+        padding: 14px;
+        gap: 6px;
+      }
+
+      .metric strong {
+        font-size: 23px;
+      }
+
+      .metric span {
+        font-size: 14px;
+      }
+
+      .metric small {
+        font-size: 12px;
+      }
+
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .card {
+        padding: 16px;
+        border-radius: 15px;
+      }
+
+      .section-title h2 {
+        font-size: 16px;
+      }
+
+      .section-title p {
+        margin-bottom: 13px;
+        font-size: 12px;
+      }
+
+      .empty {
+        min-height: 76px;
+        padding: 12px;
+        font-size: 13px;
+      }
+
+      .compact-row {
+        padding: 9px 0;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .toolbar input {
+        grid-column: 1 / -1;
+      }
+
+      .toolbar .primary {
+        width: 100%;
+      }
+
+      .table-wrap {
+        margin: 0 -5px;
+      }
+
+      .budget-row {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        padding: 13px 0;
+      }
+
+      .budget-input {
+        grid-column: auto;
+      }
+
+      .recurring-row {
+        grid-template-columns: 1fr auto;
+        gap: 9px;
+      }
+
+      .recurring-row > div:nth-child(2),
+      .recurring-row .status {
+        grid-column: 1;
+      }
+
+      .recurring-row .secondary,
+      .recurring-row .delete-button {
+        grid-column: 2;
+      }
+
+      .modal-backdrop {
+        align-items: end;
+        padding: 0;
+      }
+
+      .modal {
+        width: 100%;
+        max-height: 91vh;
+        border-radius: 22px 22px 0 0;
+        padding: 20px 16px calc(18px + env(safe-area-inset-bottom));
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid .full {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .metric {
+        min-height: 105px;
+      }
+
+      .actions .primary {
+        font-size: 0;
+        width: 42px;
+        height: 42px;
+        padding: 0;
+      }
+
+      .actions .primary::before {
+        content: "+";
+        font-size: 24px;
+      }
+    }
+
   </style>
 </head>
 <body>
