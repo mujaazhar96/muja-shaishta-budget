@@ -7,7 +7,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="app-version" content="3.1">
+  <meta name="app-version" content="3.2">
   <title>Muja & Shaishta Budget</title>
   <style>
     :root{
@@ -1202,8 +1202,17 @@
     }
 
     function renderTransactions(){
-      const list=state.transactions.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+      const list=state.transactions
+        .filter(t=>monthOf(t.date)===state.month)
+        .slice()
+        .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
       $("transactionsView").innerHTML=`<article class="card">
+        <div class="section-title">
+          <div>
+            <h2>${new Date(`${state.month}-15T12:00:00`).toLocaleDateString("en-CA",{month:"long",year:"numeric"})} transactions</h2>
+            <p>Only transactions from the selected month are shown below.</p>
+          </div>
+        </div>
         <div class="toolbar"><input id="searchTx" placeholder="Search transactions"><select id="forFilter"><option value="">All: For</option>${FOR_OPTIONS.map(x=>`<option>${x}</option>`).join("")}</select><select id="typeFilter"><option value="">All types</option><option value="expense">Expense</option><option value="saving">Saving</option></select><button id="inlineAddTx" class="primary">＋ Add</button></div>
         <div id="transactionResults">${transactionTable(list)}</div>
       </article>`;
@@ -1216,7 +1225,7 @@
       wireTransactionDeletes();
     }
     function transactionTable(list){
-      if(!list.length)return empty("No transactions found.");
+      if(!list.length)return empty("No transactions found for this month.");
       return `<div class="table-wrap"><table><thead><tr><th>Date</th><th>Description</th><th>Category / Saving</th><th>For</th><th>Type</th><th>Amount</th><th>Delete</th></tr></thead><tbody>${list.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(description(t))}</td><td>${esc(t.type==="expense"?categoryName(t.categoryId):savingName(t.savingId))}</td><td>${esc(t.forWhom||"Household")}</td><td>${esc(t.type)}</td><td class="${t.type==="saving"?"positive":"negative"}">${t.type==="saving"?"+":"−"}${money(t.amount)}</td><td><button class="delete-button" data-delete-transaction="${t.id}" title="Delete transaction">×</button></td></tr>`).join("")}</tbody></table></div>`;
     }
     function wireTransactionDeletes(){
