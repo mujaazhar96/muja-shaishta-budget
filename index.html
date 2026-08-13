@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#14231d">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="app-version" content="2.9">
   <title>Muja & Shaishta Budget</title>
   <style>
     :root{
@@ -865,6 +869,56 @@
       }
     }
 
+  
+    /* Mobile drawer receipt shortcut v2.8 */
+    #drawerReceiptButton {
+      background: rgba(232, 241, 237, .1);
+      border: 1px solid rgba(159, 178, 169, .22);
+      color: #eef7f2;
+    }
+
+    #drawerReceiptButton:hover {
+      background: #2a4137;
+    }
+
+    @media (min-width: 901px) {
+      #drawerReceiptButton {
+        display: none;
+      }
+    }
+
+  
+    /* Receipt source choice v2.9 */
+    .receipt-source-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .receipt-source-button {
+      min-width: 150px;
+    }
+
+    #receiptCameraInput,
+    #receiptGalleryInput {
+      display: none;
+    }
+
+    @media (max-width: 500px) {
+      .receipt-source-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .receipt-source-button {
+        width: 100%;
+        min-height: 48px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -903,6 +957,7 @@
       <div class="brand"><div class="logo">M&S</div><div><strong>Our Budget</strong><span>Muja & Shaishta</span></div></div>
       <nav id="navigation">
         <button class="active" data-view="dashboard">▦ Dashboard</button>
+        <button id="drawerReceiptButton" type="button">▣ Scan Receipt</button>
         <button data-view="transactions">▤ Transactions</button>
         <button data-view="budgets">◫ Monthly Budgets</button>
         <button data-view="savings">◉ Savings</button>
@@ -1077,7 +1132,14 @@
       state.view=button.dataset.view;document.querySelectorAll("#navigation button").forEach(b=>b.classList.toggle("active",b===button));render();
     };
     $("previousMonth").onclick=()=>shiftMonth(-1);$("nextMonth").onclick=()=>shiftMonth(1);
-    $("transactionButton").onclick=openTransactionModal;$("receiptButton").onclick=openReceiptModal;
+    $("transactionButton").onclick=openTransactionModal;
+    $("receiptButton").onclick=openReceiptModal;
+    $("drawerReceiptButton").onclick=()=>{
+      document.querySelector(".sidebar")?.classList.remove("mobile-open");
+      $("mobileMenuOverlay")?.classList.add("hidden");
+      document.body.style.overflow="";
+      openReceiptModal();
+    };
 
     function shiftMonth(direction){const d=new Date(`${state.month}-15T12:00:00`);d.setMonth(d.getMonth()+direction);state.month=d.toISOString().slice(0,7);render()}
     function currentTransactions(){return state.transactions.filter(t=>monthOf(t.date)===state.month)}
@@ -1354,22 +1416,34 @@
 
       function showUpload(){
         $("receiptWorkflow").innerHTML=`
-          <label class="receipt-zone receipt-upload-zone">
+          <div class="receipt-zone receipt-upload-zone">
             <div class="receipt-camera">▣</div>
-            <strong>Take a photo or choose a receipt</strong>
-            <span>Use a clear, straight photo that shows the complete receipt.</span>
+            <strong>Add a receipt</strong>
+            <span>Take a new photo or choose an existing image from your phone.</span>
             <span>JPG, PNG or WebP · maximum 14 MB</span>
-            <input id="receiptFile" type="file" accept="image/jpeg,image/png,image/webp" capture="environment">
-          </label>
+
+            <div class="receipt-source-actions">
+              <button id="takeReceiptPhoto" class="primary receipt-source-button" type="button">📷 Take Photo</button>
+              <button id="chooseReceiptPhoto" class="secondary receipt-source-button" type="button">🖼 Choose Photo</button>
+            </div>
+
+            <input id="receiptCameraInput" type="file" accept="image/jpeg,image/png,image/webp" capture="environment">
+            <input id="receiptGalleryInput" type="file" accept="image/jpeg,image/png,image/webp">
+          </div>
+
           <div class="receipt-privacy">
             The image is sent to Gemini only for extraction. This version does not permanently store the receipt image.
           </div>
+
           <div class="modal-actions">
             <button id="cancelReceipt" class="ghost" type="button">Cancel</button>
           </div>`;
 
         $("cancelReceipt").onclick=closeReceipt;
-        $("receiptFile").onchange=event=>{
+        $("takeReceiptPhoto").onclick=()=>$("receiptCameraInput").click();
+        $("chooseReceiptPhoto").onclick=()=>$("receiptGalleryInput").click();
+
+        const handleReceiptFile=event=>{
           const file=event.target.files?.[0];
           if(!file)return;
           if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
@@ -1385,6 +1459,9 @@
           previewUrl=URL.createObjectURL(file);
           showPreview();
         };
+
+        $("receiptCameraInput").onchange=handleReceiptFile;
+        $("receiptGalleryInput").onchange=handleReceiptFile;
       }
 
       function showPreview(){
